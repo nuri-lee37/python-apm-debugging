@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: 601427279990.dkr.ecr.ap-northeast-2.amazonaws.com/nurilee
+  tag: my-datadog-app-v6
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+env:
+  DD_SERVICE: "my-python-service"
+  DD_ENV: "staging"
+  DD_LOGS_INJECTION: "true"
+
+resources: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+

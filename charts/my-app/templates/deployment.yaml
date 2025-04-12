@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_SERVICE
+              value: {{ .Values.env.DD_SERVICE | quote }}
+            - name: DD_ENV
+              value: {{ .Values.env.DD_ENV | quote }}
+            - name: DD_LOGS_INJECTION
+              value: {{ .Values.env.DD_LOGS_INJECTION | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
