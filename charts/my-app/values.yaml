@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: 601427279990.dkr.ecr.ap-northeast-2.amazonaws.com/nurilee
-  tag: my-datadog-app-v6
+  repository: <YOUR ECR REPO>
+  tag: <YOUR TAG>
   pullPolicy: IfNotPresent
 
 service:
